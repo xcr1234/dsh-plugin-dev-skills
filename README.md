@@ -1,72 +1,61 @@
 # dsh-plugin-dev
 
-开发 DeepSeek Harness (DSH) 插件的 Agent Skill（遵循 [Agent Skills 规范](https://agentskills.io)，SKILL.md + references/ 渐进式披露）。
+An [Agent Skills](https://agentskills.io)–compliant skill that teaches agents how to develop plugins for **DeepSeek Harness (DSH)**. 中文说明见 [README.zh.md](README.zh.md)。
 
-An Agent Skill for developing DeepSeek Harness (DSH) plugins, following the Agent Skills specification (SKILL.md + progressive disclosure via references/).
+DeepSeek Harness is a plugin-based SDK for building agent harnesses: model adapters, the tool registry, the session log, even the agent loop itself — everything is a Cordis plugin that can be swapped from configuration. This skill distills the official DSH documentation into one executable standard for writing those plugins, so any agent that loads it develops DSH plugins the same way every time.
 
-## 定位 / What it is
-
-把 DSH 官方文档中分散在教程、参考手册与生成目录里的插件开发约定，收敛为可执行的标准：8 条硬规则、6 个场景工作流、决策速查表与完成前检查清单；12 个 references 按需加载详细标准（插件形态与生命周期、服务与依赖、五种事件分发模式、插件配置、上下文与 Fiber API、三种角色设计、工具开发、LLM 适配器协议、插件形态扩展、打包安装、workspace 包、seam 全表）。
-
-A distilled, executable standard for DSH plugin development: hard rules, scenario workflows, decision tables, checklists, and 12 on-demand references covering the full plugin-development surface.
-
-## 目录结构 / Layout
+## What's inside
 
 ```
 dsh-plugin-dev/
-├── SKILL.md                       # 入口：frontmatter + 硬规则 + 工作流 + 决策表 + 检查清单
-├── references/                    # 12 个按需加载的详细标准
-├── examples/                      # 可复制、可运行的最小示例
-│   ├── hello-plugin/              # 最小插件（bundle 格式，可直接安装）
-│   └── greet-tool/                # 最小模型工具（defineTool + output.render）
-└── evals/                         # description 触发评测集与方法
+├── SKILL.md      # entry point: frontmatter, 8 hard rules, 6 scenario workflows,
+│                 # decision tables, and a pre-completion checklist
+├── references/   # 12 detailed standards, loaded on demand (progressive disclosure)
+├── examples/     # two minimal, copy-and-run example plugins
+│   ├── hello-plugin/
+│   └── greet-tool/
+└── evals/        # trigger-evaluation set and methodology for the description
 ```
 
-## 安装 / Installation
+The reference library covers: plugin anatomy & lifecycle · services & dependency injection · all five event dispatch modes · plugin configuration · Context/Fiber/registry APIs · three-role capability design (Definition/Provider/Consumer) · tool development · the LLM adapter protocol · plugin form extensions (tool/hook/UI/protocol bridge) · packaging & installation · in-repo workspace packages · the complete capability-seam catalog.
 
-把整个 `dsh-plugin-dev` 文件夹复制到对应 agent 的技能目录即可，无需任何配置（无构建步骤、无脚本依赖）：
+## Installation
 
-Copy the whole `dsh-plugin-dev` folder into the skill directory of your agent — no configuration, no build step, no script dependencies:
+Copy the whole `dsh-plugin-dev` folder into your agent's skill directory. No build step, no script dependencies, no configuration.
 
-| Agent | 项目级 / Project-level | 用户级 / User-level |
+| Agent | Project-level | User-level |
 | --- | --- | --- |
-| DeepSeek Harness | `<project>/.dsh/skills/`（rank 100）或 `<project>/.agents/skills/`（rank 200） | `~/.dsh/skills/`（rank 400） |
+| DeepSeek Harness | `<project>/.dsh/skills/` (rank 100) or `<project>/.agents/skills/` (rank 200) | `~/.dsh/skills/` (rank 400) |
 | Claude Code | `<project>/.claude/skills/` | `~/.claude/skills/` |
 | Codex | `<project>/.codex/skills/` | `~/.codex/skills/` |
 | VS Code Copilot | `<project>/.agents/skills/` | `~/.agents/skills/` |
-| 其它兼容 agent | 按该 agent 的 Agent Skills 发现目录约定 | 同上 |
+| Other compatible agents | follow that agent's skill-directory convention | same |
 
-安装验证：向 agent 提问"开发一个 DSH 插件 / 写一个 DSH 工具 / 接一个模型提供方"应触发本技能；在 DSH 中可用 `skill(dsh-plugin-dev)` 工具直接加载验证。
+To verify: ask the agent "开发一个 DSH 插件" or "write a DSH tool" — the skill should trigger. In DSH you can also load it directly with the `skill(dsh-plugin-dev)` tool.
 
-Verify by asking the agent to "开发一个 DSH 插件 / create a DSH tool" — the skill should trigger and load.
+## Version tracking
 
-## 版本对应 / Version tracking
+The content was distilled from the official DeepSeek Harness documentation site (deepseek-harness.github.io, snapshot dated 2026-08) and follows the project's own principle: when the skill disagrees with the repository's generated references, **the generated references win**. If you hit a discrepancy, please open an issue or PR here.
 
-技能内容蒸馏自 **DeepSeek Harness 官方文档站**（deepseek-harness.github.io，2026-08 文档快照），并遵循官方「接口以生成参考为准」的原则：当技能内容与仓库自动生成的子系统页面/接口不一致时，**以官方生成参考为准**，并向本仓库提交修正。
+## Trigger evals
 
-The content was distilled from the official DeepSeek Harness docs (2026-08 snapshot). When the skill and the repository's generated references disagree, the generated references win — please file a fix here.
+`evals/trigger-queries.json` is the regression set for the skill's description (12 should-trigger + 9 should-not-trigger queries). Before changing the description, run the evals and record pass rates — `evals/README.md` explains the methodology, including train/validation splits to avoid overfitting.
 
-## 触发评测 / Trigger evals
+## Examples
 
-`evals/trigger-queries.json` 是 description 的回归评测集（should-trigger / should-not-trigger 查询）。修改 description 前请先跑评测并记录通过率；评测方法见 `evals/README.md`。
+- `examples/hello-plugin` — a minimal plugin in bundle format. Run `dsh plugin --profile demo add ./examples/hello-plugin`, then `dsh --profile demo`: you should see `[hello-plugin] plugin loaded!` and a heartbeat every 5 seconds, cleaned up automatically on unload.
+- `examples/greet-tool` — a minimal model-facing tool. After installing it, ask the agent: "Use the greet tool to greet Ada." It should reply "Hello, Ada!".
 
-## 示例 / Examples
+## Scope
 
-- `examples/hello-plugin` —— 最小插件：`dsh plugin --profile demo add ./examples/hello-plugin` 后启动即可看到加载日志。
-- `examples/greet-tool` —— 最小模型工具：安装后对 agent 说 "Use the greet tool to greet Ada."。
+This skill covers **file-based** DSH plugin development: plugin packages, cordis.yml rows, patch overlays, tools, adapters, bundles, profiles, and in-repo workspace packages. Out of scope: in-session dynamic plugins (the `cordis_define`/`cordis_run` flow) and agent-preset composition editing — those are handled by each deployment's own dedicated skills and tools.
 
-## 范围边界 / Scope
+## Contributing
 
-本技能覆盖**仓库内、文件式**的 DSH 插件开发。不覆盖：会话内动态插件（`cordis_define`/`cordis_run` 流）与 agent preset 组合编辑——这两类由各部署的专项技能/官方工具覆盖。
-
-Covers file-based DSH plugin development. Out of scope: in-session dynamic plugins (`cordis_define`/`cordis_run`) and agent-preset composition editing.
-
-## 维护与贡献 / Maintenance & contributing
-
-- 更新任何 references 前，先核对官方文档对应页面（文档站或源码生成区块），并在 PR 中注明来源页面。
-- 保持 Agent Skills 规范：name 为 kebab-case 且与目录一致；description ≤ 1024 字符（DSH 目录注入提醒默认 500 字符）；正文渐进式披露。
-- 欢迎 PR：修正、补充示例、扩充评测集、提供英文/其它语言版本。
+- Before updating any reference, check the corresponding official docs page (site or generated source blocks) and cite it in your PR.
+- Respect the Agent Skills constraints: kebab-case `name` matching the folder; `description` ≤ 1024 chars (DSH's catalog reminder caps at 500); progressive disclosure in the body.
+- PRs are welcome: fixes, more examples, a larger eval set, and translations.
 
 ## License
 
-MIT — 见 [LICENSE](LICENSE)。
+MIT — see [LICENSE](LICENSE).
