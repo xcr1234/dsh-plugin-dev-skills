@@ -1,11 +1,11 @@
 ---
 name: dsh-plugin-dev
-description: 开发 DeepSeek Harness (DSH) 插件的标准与权威参考。当用户要编写、修改、审查或调试 DSH/Cordis 插件——创建插件、定义或消费服务、声明或监听事件、编写插件配置、开发模型工具、编写 LLM 适配器、按三种角色拆分能力、打包与安装插件、在仓库内添加 workspace 包、编辑 cordis.yml 组合时使用。用户提到 DSH 插件、Cordis 插件、plugin、服务、事件、工具、适配器、打包安装等即触发。
+description: 开发 DeepSeek Harness (DSH) 插件的标准与权威参考：编写/修改/审查/调试 DSH/Cordis 插件、服务、事件、插件配置、模型工具、LLM 适配器、三种角色拆分、打包安装、workspace 包、cordis.yml 组合时使用；提到 DSH 插件、Cordis、plugin、服务、事件、工具、适配器即触发。 The authoritative standard for developing DeepSeek Harness (DSH) plugins — create, modify, review or debug DSH/Cordis plugins, services, events, config, model tools, LLM adapters, three-role capabilities, packaging, and cordis.yml composition.
 license: MIT
 compatibility: 适用于任何支持 Agent Skills 的 agent。内容面向 DeepSeek Harness 的 Cordis 插件生态（@deepseek-ai/* 包）。
 metadata:
   author: zimo
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # 开发 DSH 插件标准
@@ -16,7 +16,7 @@ metadata:
 
 - 仓库内、文件式的 DSH 插件开发：编写插件包、注册 cordis.yml 行、patch overlay、开发工具、接模型、打包安装。
 - DSH monorepo 内的 workspace 包开发（packages/<group>/<pkg>）也属本技能（references/workspace-package.md）。
-- 本技能**不**覆盖：会话内动态插件（cordis_define/cordis_run 流）与 agent preset 组合编辑——这两类有自己的专项技能。
+- 本技能**不**覆盖：会话内动态插件（cordis_define/cordis_run 流）与 agent preset 组合编辑——这两类由各部署的专项技能或官方工具覆盖。
 
 ## 硬规则（任何场景都必须遵守）
 
@@ -132,4 +132,5 @@ pnpm dsh web --patch ./scratch-plugin/cordis.yml   # 打开 http://127.0.0.1:308
 
 - 格式自检：name 为 kebab-case 且与目录名一致；description 非空且简洁（本技能控制在 500 字符内）；正文用标准 Markdown；所有引用的 references 文件真实存在。
 - 有 skills-ref CLI 的环境可执行：skills-ref validate ./dsh-plugin-dev
+- 触发回归：修改 description 后运行 evals/trigger-queries.json 评测集（方法见仓库 evals/README.md）。
 - 行为验证：按场景 A 走通一个最小插件（加载日志 + 卸载清理），再按场景 B 走通一个 greet 工具。
