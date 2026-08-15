@@ -1,11 +1,11 @@
 ---
 name: dsh-plugin-dev
-description: 开发 DeepSeek Harness (DSH) 插件的标准与权威参考。当用户要编写、修改、审查或调试 DSH/Cordis 插件——创建插件、定义或消费服务、声明或监听事件、编写插件配置、开发模型工具、编写 LLM 适配器、按三种角色拆分能力、打包与安装插件、编辑 cordis.yml 组合时使用。用户提到 DSH 插件、Cordis 插件、plugin、服务、事件、工具、适配器、打包安装等即触发。
+description: 开发 DeepSeek Harness (DSH) 插件的标准与权威参考。当用户要编写、修改、审查或调试 DSH/Cordis 插件——创建插件、定义或消费服务、声明或监听事件、编写插件配置、开发模型工具、编写 LLM 适配器、按三种角色拆分能力、打包与安装插件、在仓库内添加 workspace 包、编辑 cordis.yml 组合时使用。用户提到 DSH 插件、Cordis 插件、plugin、服务、事件、工具、适配器、打包安装等即触发。
 license: MIT
-compatibility: 适用于任何支持 Agent Skills 的 agent（Claude Code、Codex、DeepSeek Harness、VS Code Copilot 等）。内容面向 DeepSeek Harness 的 Cordis 插件生态（@deepseek-ai/* 包）；示例基于源码 checkout 的开发流。
+compatibility: 适用于任何支持 Agent Skills 的 agent。内容面向 DeepSeek Harness 的 Cordis 插件生态（@deepseek-ai/* 包）。
 metadata:
   author: zimo
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # 开发 DSH 插件标准
@@ -15,6 +15,7 @@ metadata:
 ## 适用范围
 
 - 仓库内、文件式的 DSH 插件开发：编写插件包、注册 cordis.yml 行、patch overlay、开发工具、接模型、打包安装。
+- DSH monorepo 内的 workspace 包开发（packages/<group>/<pkg>）也属本技能（references/workspace-package.md）。
 - 本技能**不**覆盖：会话内动态插件（cordis_define/cordis_run 流）与 agent preset 组合编辑——这两类有自己的专项技能。
 
 ## 硬规则（任何场景都必须遵守）
@@ -34,14 +35,30 @@ metadata:
 
 1. 确定插件要贡献什么（服务？工具？监听？），用 references/seams.md 的「新行为的归属位置」表选择机制。
 2. 创建 src/<name>.ts，导出 name、inject（可选）、apply(ctx, config?)。先写函数形态；要对外提供服务时再换 Service 类形态。
-3. 在组合文件中注册行（cordis.yml / patch overlay / bundle patch），本地用 --patch overlay 跑通。
-4. 验证加载与卸载：启动日志出现、停用时资源确实清理（详见 references/plugin-anatomy.md）。
+3. 本地开发回路（源码 checkout）：
+
+```bash
+mkdir -p scratch-plugin/src
+```
+
+```yaml
+# scratch-plugin/cordis.yml —— patch overlay；插件路径必须是绝对路径
+- insert:
+    - id: hello
+      name: '/absolute/path/to/deepseek-harness/scratch-plugin/src/my-plugin.ts'
+```
+
+```bash
+pnpm dsh web --patch ./scratch-plugin/cordis.yml   # 打开 http://127.0.0.1:3080
+```
+
+4. 验证加载与卸载：启动日志出现、停用时资源确实清理（references/plugin-anatomy.md）。
 
 ### 场景 B：给模型加一个工具
 
 1. inject: ['tools']，用 defineTool 定义（name/description/parameters/output/execute）。
 2. 按 references/tools.md 的 execute 约定实现：schema DSL 声明参数与输出、execute 返回规范值、遵守 exec.signal、可选 presentationMeta/UI 卡片。
-3. 需要策略时挂 tools/* 事件（pre-execute/guard/execute/post-execute/result），不要把策略写死在工具体里。
+3. 需要策略时挂 tools/* 事件（pre-execute/guard/execute/post-execute/result），不要把策略写死在工具体里（权限门禁示例见 references/plugin-forms.md）。
 4. 重启后让模型实际调用验证。
 
 ### 场景 C：可替换能力（多种提供方）
@@ -52,9 +69,9 @@ metadata:
 
 ### 场景 D：接入新的模型提供方
 
-1. 继承 LlmAdapter 实现 stream()，按 StreamChunk 协议输出分片；错误用带稳定 code 的 LlmError；每个 HTTP 请求合并 attributionHeaders() 并传递 signal。
+1. 继承 LlmAdapter 实现 stream()，按 StreamChunk 协议输出分片；错误用带稳定 code 的 LlmError（或在带内以 finish { kind: 'error' | 'aborted' } 结束）；每个 HTTP 请求合并 attributionHeaders() 并传递 signal。
 2. ctx.llm.registerAdapter(['<provider>'], adapter)；可选覆写 resolveModel()/listModels()。
-3. 在组合中配置 agent-loop 的 provider/model 验证。详见 references/llm-adapter.md。
+3. 在组合中配置 agent-loop 的 provider/model 验证。详见 references/llm-adapter.md（含 7 条协议义务）。
 
 ### 场景 E：打包与安装交付
 
@@ -62,19 +79,26 @@ metadata:
 2. 安装：dsh plugin --profile <name> add <pkg>；先 dsh --profile <name> --dump-config 验证层，再启动。
 3. 记住层顺序与整行替换语义（references/packaging.md）。
 
+### 场景 F：在 DSH monorepo 内新建包
+
+按 references/workspace-package.md 的逐文件清单执行：创建包（package.json 不变式/tsconfig/src/README）→ 根配置注册 → 包拓扑与命名（角色词表）→ README Model Experience 结构 → 验证命令。
+
 ## 决策速查
 
 | 我要…… | 机制 | 详情 |
 | --- | --- | --- |
 | 向其他插件公开能力 | Service（类形态） | references/services.md |
 | 消费已有能力 | inject 或 ctx.get() | references/services.md |
-| 插件间通信 / 扩展点 | ctx.on / ctx.emit 等事件 | references/events.md |
+| 插件间通信 / 扩展点 | ctx.on / ctx.emit 等事件（五种分发模式） | references/events.md |
 | 让用户可配置 | Config + Schemastery | references/config.md |
-| 给模型加能力 | defineTool → ctx.tools.register | references/tools.md |
+| 给模型加能力 | defineTool → ctx.tools.register（或原始 JSON Schema） | references/tools.md |
 | 接新模型提供方 | LlmAdapter + ctx.llm.registerAdapter | references/llm-adapter.md |
 | 拆可替换能力 | 三种角色（Definition/Provider/Consumer） | references/three-roles.md |
 | 分发插件 | 组合包 + profile | references/packaging.md |
 | 查内置服务 / 归属位置 | seam 目录、架构映射 | references/seams.md |
+| 作用域/服务存储/Fiber API | ctx.extend/isolate/provide/mixin、fiber.* | references/context-api.md |
+| 钩子 / UI / 协议桥插件 | 四种扩展形态 + 功能→机制映射 | references/plugin-forms.md |
+| 在仓库内新建包 / 命名 | workspace 包清单 + 角色词表 | references/workspace-package.md |
 
 ## 完成前检查清单
 
@@ -82,23 +106,27 @@ metadata:
 - [ ] 所有注册走 ctx（事件/工具/适配器/effect），卸载可清理；顺序敏感的清理放在同一个 ctx.effect 里。
 - [ ] 必需依赖注入声明正确；可选依赖有 undefined 处理。
 - [ ] 有配置的插件：Config 用 Schemastery，默认值进 schema，无效配置在加载时响亮失败。
-- [ ] 有工具：execute 返回规范 JSON 值；render 负责人类可读；策略走 tools/* 事件；遵守 exec.signal。
+- [ ] 有工具：execute 返回规范 JSON 值；render 负责人类可读；策略走 tools/* 事件；遵守 exec.signal；并发安全声明了 isConcurrencySafe（未声明 → exclusive）。
 - [ ] 有 waterfall 监听：调用并返回 next()（除非有意短路）。
-- [ ] 有 LLM 适配器：StreamChunk 协议完整（block 配对、usage 在 finish 前）；错误带稳定 code；传了 attributionHeaders 与 signal。
+- [ ] 有 LLM 适配器：StreamChunk 协议完整（块配对、index 按首次出现、usage 在 finish 前、arguments 全程原始 JSON 字符串）；错误走两条合法路径之一；不支持的字段抛 UNSUPPORTED；需要原生回放时发 finish.replayState；传了 attributionHeaders 与 signal。
 - [ ] 组合行与层序正确；新增行在 --dump-config 中可见；HMR/重启后无残留注册。
 - [ ] 若模型可见内容变化：落在日志可重建的机制内。
+- [ ] 新建 workspace 包：package.json 不变式、恰一个 aggregate、命名符合角色词表、README 有 Model Experience 结构，且 constraints/typecheck/lint/build/hygiene 全绿。
 
 ## 参考文件（按需加载，不要一次全读）
 
 - references/plugin-anatomy.md —— 插件形态、生命周期、Fiber 状态机、自动清理、HMR
 - references/services.md —— 服务定义/提供/消费、inject、隔离
-- references/events.md —— 事件分发模式与命名
+- references/events.md —— 五种事件分发模式、命名、持久会话事件区分
 - references/config.md —— 插件配置与 cordis.yml 行
+- references/context-api.md —— 上下文 API（服务存储/作用域/静态成员）、Fiber 类、注册表、继承的框架 API
 - references/three-roles.md —— 能力三种角色（seam）设计
-- references/tools.md —— 工具开发完整约定
-- references/llm-adapter.md —— LLM 适配器协议
+- references/tools.md —— 工具开发完整约定（两种注册、execute 规则、schema DSL、流水线、UI 卡片）
+- references/llm-adapter.md —— LLM 适配器协议（StreamChunk、7 条协议义务、注册语义）
+- references/plugin-forms.md —— 四种扩展形态（工具/钩子/UI/协议桥）与功能→机制映射
 - references/packaging.md —— 打包、安装与层序
-- references/seams.md —— 核心服务目录与架构映射
+- references/workspace-package.md —— 在 DSH monorepo 内新建包的逐文件清单与命名规范
+- references/seams.md —— 核心 seam 与能力服务全表、新行为归属、轮次流程
 
 ## 验证
 

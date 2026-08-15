@@ -2,6 +2,11 @@
 
 面向模型的工具必须满足的约定，均以本文为准。按步骤构建第一个工具见 SKILL.md 场景 B；packages/shell/tool-bash 是生产级三包示例。
 
+## 两种注册方式
+
+- **defineTool（第一方推荐）**：类型化辅助函数——根据 parameters 推导并校验 args、根据 output.schema 推导返回类型，并为输出投影器提供类型约束。
+- **原始 JSON Schema ToolDefinition（直接注册）**：ctx.tools.register() 也直接接受原始 JSON Schema 定义——MCP 来源的工具就是这样到达的。此类工具自行负责输入校验（见下「已强制执行的原始 JSON Schema 子集」）。
+
 ## 最小形态
 
 ```ts
@@ -45,6 +50,7 @@ export function apply(ctx: Context) {
 6. **遵守 exec.signal。** 信号触发时取消进行中的工作。
 7. **presentationMeta 投影持久卡片数据（可选）。** output.presentationMeta(args, value) 从同一规范值派生可回放 JSON，核心持久化在 tool/result 上并传给 presentResult。
 8. **用 exec.agent 发送异步通知。** agent.inject({ content, source: { kind: 'plugin', plugin: '<name>' } }) 追加持久上下文供下一次模型请求可见——这不是唤醒。对已 dispose 的 agent 要 try/catch。
+9. **声明并发安全性。** 可选 isConcurrencySafe(args) 返回该次调用能否加入并行组。执行模式由注册表按可见定义分类（executionMode）：只有精确返回 true 才得到 parallel（可与兄弟调用重叠）；未知、隐藏、未声明、无效或抛错的分类器一律 fail-closed 为 exclusive（独占执行并形成顺序屏障）。
 
 ## 统一的 JSON 值 schema DSL
 
@@ -74,6 +80,8 @@ interface ToolRestriction {
   deny?: readonly string[]    // 移除黑名单
 }
 ```
+
+需要在展示、查找和执行之间保持对齐的工具过滤，优先使用 ctx.tools.restrict()（注册表让三者使用同一可见性解析器）。
 
 ## 执行流水线
 
@@ -129,9 +137,11 @@ assertSupportedJsonSchema() 拒绝无效组合；validateJsonSchemaValue() 强�
 
 ## 执行策略与观测（不要内建策略）
 
-- tools/pre-execute —— 可扩展的允许/拒绝/询问策略
+选择规则（完整示例见 references/plugin-forms.md 的钩子插件一节）：
+
+- tools/pre-execute —— 可扩展的允许/拒绝/询问策略（钩子插件、权限门禁）
 - ctx.tools.guard() —— 最终单调拒绝（后续监听器无法撤销）
-- tools/execute —— 截止时间、重试、指标收集
+- tools/execute —— 截止时间、重试、指标收集（仅 exec.signal 可替换）
 - tools/post-execute —— 替换展示内容或返回值、阻止结果、附加模型可见上下文
 - tools/result —— 观测不可变归一化结果而不改变它
 

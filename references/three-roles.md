@@ -105,3 +105,4 @@ export function apply(ctx: Context) {
 - **不要预防性拆分**：只有角色需要独立演进时才用不同包；简单工具插件无需拆分。
 - **Service Definition 拥有 Request/Result 类型**：Provider 和 Consumer 只依赖 Definition 包。
 - **显式优于隐式**：实现应通过显式的 resolve(request): Spec 步骤处理默认值，而不是在 run() 里隐藏 ?? default。
+- **命名与包拓扑**：包名描述当前稳定职责；实现包加机制/协议/环境/厂商限定词；Controller/Store/Registry/Runtime 等角色词的适用条件与 ctx key 单复数规则见 references/workspace-package.md。

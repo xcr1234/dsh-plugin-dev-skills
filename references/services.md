@@ -62,6 +62,10 @@ export function apply(ctx: Context) {
 }
 ```
 
+子类在构造函数中调用 super(ctx, name)：服务会立即注册，并随所属 fiber 自动移除。Service 还有一组静态符号成员（init、check、config、invoke、extend、tracker、resolveConfig），细节以 Service 参考页为准。
+
+底层替代：不经 Service 基类、直接用 ctx.provide() / ctx.accessor() / ctx.mixin() 操作服务存储，见 references/context-api.md。
+
 ## 依赖的行为
 
 - **必需依赖消失**（提供方卸载）→ 依赖它的插件自动 dispose；服务重新出现时自动重新加载。这防止插件调用已不存在的服务。
