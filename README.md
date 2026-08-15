@@ -1,17 +1,17 @@
 # dsh-plugin-dev
 
 <p align="center">
-  <img src="https://img.shields.io/github/repo-size/zimodzh/dsh-plugin-dev-skills?style=flat-square" alt="repo size" />
-  <img src="https://img.shields.io/github/last-commit/zimodzh/dsh-plugin-dev-skills?style=flat-square" alt="last commit" />
-  <img src="https://img.shields.io/github/license/zimodzh/dsh-plugin-dev-skills?style=flat-square" alt="MIT license" />
-  <img src="https://img.shields.io/badge/Agent_Skills-compliant-4D6BFE?style=flat-square" alt="Agent Skills compliant" />
-</p>
-
-<p align="center">
   <samp>
     <strong>English</strong> ·
     <a href="./README.zh.md">中文</a>
   </samp>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/github/repo-size/zimodzh/dsh-plugin-dev-skills?style=flat-square" alt="repo size" />
+  <img src="https://img.shields.io/github/last-commit/zimodzh/dsh-plugin-dev-skills?style=flat-square" alt="last commit" />
+  <img src="https://img.shields.io/github/license/zimodzh/dsh-plugin-dev-skills?style=flat-square" alt="MIT license" />
+  <img src="https://img.shields.io/badge/Agent_Skills-compliant-4D6BFE?style=flat-square" alt="Agent Skills compliant" />
 </p>
 
 An [Agent Skills](https://agentskills.io)–compliant skill that teaches agents how to develop plugins for **DeepSeek Harness (DSH)**.
