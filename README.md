@@ -28,7 +28,15 @@ The reference library covers: plugin anatomy & lifecycle · services & dependenc
 
 ## Installation
 
-Copy the whole `dsh-plugin-dev` folder into your agent's skill directory. No build step, no script dependencies, no configuration.
+The skill name is `dsh-plugin-dev`, and Agent Skills requires the containing folder to be named the same. This repository is called `dsh-plugin-dev-skills` — clone it directly into a folder named `dsh-plugin-dev`:
+
+```bash
+git clone https://github.com/<owner>/dsh-plugin-dev-skills.git ~/.claude/skills/dsh-plugin-dev
+```
+
+Replace `<owner>` and the target directory as needed for your agent (see the table below). Prefer downloading a release tarball instead? Extract it and rename the folder to `dsh-plugin-dev`.
+
+No build step, no script dependencies, no configuration.
 
 | Agent | Project-level | User-level |
 | --- | --- | --- |
