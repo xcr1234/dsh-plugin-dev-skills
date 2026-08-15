@@ -1,5 +1,12 @@
 # Examples
 
+<p align="center">
+  <samp>
+    <strong>English</strong> ·
+    <a href="./README.zh.md">中文</a>
+  </samp>
+</p>
+
 Two minimal, copy-and-run examples of DSH plugins in bundle format (plain JavaScript, no build step). Both assume the `dsh` CLI is installed.
 
 | Example | What it demonstrates | Try it |

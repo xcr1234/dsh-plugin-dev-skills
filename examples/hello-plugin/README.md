@@ -1,5 +1,12 @@
 # hello-plugin
 
+<p align="center">
+  <samp>
+    <strong>English</strong> ·
+    <a href="./README.zh.md">中文</a>
+  </samp>
+</p>
+
 A minimal DSH plugin in bundle format (plain JavaScript, no build step). It logs on load and demonstrates that every registration is a disposable side effect: a heartbeat interval registered with `ctx.effect` is cleared automatically when the plugin unloads.
 
 ## Install

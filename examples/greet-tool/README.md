@@ -1,5 +1,12 @@
 # greet-tool
 
+<p align="center">
+  <samp>
+    <strong>English</strong> ·
+    <a href="./README.zh.md">中文</a>
+  </samp>
+</p>
+
 A minimal model-facing tool: registers a `greet` tool with `defineTool`. `@deepseek-ai/dsh-tools` is provided by the dsh installation itself — no extra install needed.
 
 ## Install
