@@ -33,7 +33,7 @@ references 覆盖：插件形态与生命周期 · 服务与依赖注入 · 五�
 git clone https://github.com/zimodzh/dsh-plugin-dev-skills.git ~/.claude/skills/dsh-plugin-dev
 ```
 
-把 `<owner>` 和目标目录换成你所用 agent 的对应路径（见下表）；也可以下载 release 压缩包，解压后把文件夹改名为 `dsh-plugin-dev`。
+把目标目录换成你所用 agent 的对应路径（见下表）；也可以下载 release 压缩包，解压后把文件夹改名为 `dsh-plugin-dev`。
 
 无需构建、无需脚本依赖、无需任何配置。
 

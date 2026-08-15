@@ -34,7 +34,7 @@ The skill name is `dsh-plugin-dev`, and Agent Skills requires the containing fol
 git clone https://github.com/zimodzh/dsh-plugin-dev-skills.git ~/.claude/skills/dsh-plugin-dev
 ```
 
-Replace `<owner>` and the target directory as needed for your agent (see the table below). Prefer downloading a release tarball instead? Extract it and rename the folder to `dsh-plugin-dev`.
+Adjust the target directory as needed for your agent (see the table below). Prefer downloading a release tarball instead? Extract it and rename the folder to `dsh-plugin-dev`.
 
 No build step, no script dependencies, no configuration.
 
