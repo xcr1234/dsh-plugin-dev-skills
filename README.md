@@ -14,9 +14,9 @@
   <img src="https://img.shields.io/badge/Agent_Skills-compliant-4D6BFE?style=flat-square" alt="Agent Skills compliant" />
 </p>
 
-An [Agent Skills](https://agentskills.io)–compliant skill that teaches agents how to develop plugins for **DeepSeek Harness (DSH)**.
+An [Agent Skills](https://agentskills.io)–compliant skill that teaches agents how to develop plugins for [**DeepSeek Harness (DSH)**](https://deepseek-harness.github.io/deepseek-harness/guide/quickstart).
 
-DeepSeek Harness is a plugin-based SDK for building agent harnesses: model adapters, the tool registry, the session log, even the agent loop itself — everything is a Cordis plugin that can be swapped from configuration. This skill distills the official DSH documentation into one executable standard for writing those plugins, so any agent that loads it develops DSH plugins the same way every time.
+DeepSeek Harness is a plugin-based SDK for building agent harnesses: model adapters, the tool registry, the session log, even the agent loop itself — everything is a Cordis plugin that can be swapped from configuration. This skill distills the [official DSH documentation](https://deepseek-harness.github.io/deepseek-harness/guide/quickstart) into one executable standard for writing those plugins, so any agent that loads it develops DSH plugins the same way every time.
 
 ## What's inside
 
@@ -57,11 +57,11 @@ To verify: ask the agent "开发一个 DSH 插件" or "write a DSH tool" — the
 
 ## Version tracking
 
-The content was distilled from the official DeepSeek Harness documentation site (deepseek-harness.github.io, snapshot dated 2026-08) and follows the project's own principle: when the skill disagrees with the repository's generated references, **the generated references win**. If you hit a discrepancy, please open an issue or PR here.
+The content was distilled from the [official DeepSeek Harness documentation site](https://deepseek-harness.github.io/deepseek-harness/guide/quickstart) (snapshot dated 2026-08) and follows the project's own principle: when the skill disagrees with the repository's generated references, **the generated references win**. If you hit a discrepancy, please [open an issue or PR](https://github.com/zimodzh/dsh-plugin-dev-skills/issues).
 
 ## Trigger evals
 
-`evals/trigger-queries.json` is the regression set for the skill's description (12 should-trigger + 9 should-not-trigger queries). Before changing the description, run the evals and record pass rates — `evals/README.md` explains the methodology, including train/validation splits to avoid overfitting.
+[`evals/trigger-queries.json`](evals/trigger-queries.json) is the regression set for the skill's description (12 should-trigger + 9 should-not-trigger queries). Before changing the description, run the evals and record pass rates — [`evals/README.md`](evals/README.md) explains the methodology, including train/validation splits to avoid overfitting.
 
 ## Examples
 
@@ -76,7 +76,7 @@ This skill covers **file-based** DSH plugin development: plugin packages, cordis
 
 ## Contributing
 
-- Before updating any reference, check the corresponding official docs page (site or generated source blocks) and cite it in your PR.
+- Before updating any reference, check the corresponding [official docs page](https://deepseek-harness.github.io/deepseek-harness/guide/quickstart) (site or generated source blocks) and cite it in your PR.
 - Respect the Agent Skills constraints: kebab-case `name` matching the folder; `description` ≤ 1024 chars (DSH's catalog reminder caps at 500); progressive disclosure in the body.
 - PRs are welcome: fixes, more examples, a larger eval set, and translations.
 

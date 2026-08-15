@@ -14,9 +14,9 @@
   <img src="https://img.shields.io/badge/Agent_Skills-compliant-4D6BFE?style=flat-square" alt="Agent Skills compliant" />
 </p>
 
-一套遵循 [Agent Skills 规范](https://agentskills.io) 的技能，用于开发 **DeepSeek Harness（DSH）** 插件。
+一套遵循 [Agent Skills 规范](https://agentskills.io) 的技能，用于开发 [**DeepSeek Harness（DSH）**](https://deepseek-harness.github.io/deepseek-harness/guide/quickstart) 插件。
 
-DSH 是一个插件化的 Agent Harness SDK：模型适配器、工具注册表、会话日志、甚至 agent loop 本身，全都是可以从配置里替换的 Cordis 插件。本技能把官方文档里散落在教程、参考手册与生成目录中的约定，收敛成一套可执行的标准——任何加载了它的 agent，都能用同一种方式开发 DSH 插件。
+DSH 是一个插件化的 Agent Harness SDK：模型适配器、工具注册表、会话日志、甚至 agent loop 本身，全都是可以从配置里替换的 Cordis 插件。本技能把[官方文档](https://deepseek-harness.github.io/deepseek-harness/guide/quickstart)里散落在教程、参考手册与生成目录中的约定，收敛成一套可执行的标准——任何加载了它的 agent，都能用同一种方式开发 DSH 插件。
 
 ## 技能里有什么
 
@@ -56,11 +56,11 @@ git clone https://github.com/zimodzh/dsh-plugin-dev-skills.git ~/.claude/skills/
 
 ## 版本对应
 
-内容蒸馏自 DeepSeek Harness 官方文档站（deepseek-harness.github.io，2026-08 快照），并遵循官方「接口以生成参考为准」的原则：技能内容与仓库生成参考不一致时，**以生成参考为准**。发现偏差欢迎提 issue 或 PR。
+内容蒸馏自 [DeepSeek Harness 官方文档站](https://deepseek-harness.github.io/deepseek-harness/guide/quickstart)（2026-08 快照），并遵循官方「接口以生成参考为准」的原则：技能内容与仓库生成参考不一致时，**以生成参考为准**。发现偏差欢迎[提 issue 或 PR](https://github.com/zimodzh/dsh-plugin-dev-skills/issues)。
 
 ## 触发评测
 
-`evals/trigger-queries.json` 是 description 的回归评测集（12 条正例 + 9 条负例）。修改 description 前请先跑评测并记录通过率；方法论（含训练/验证集划分、防过拟合）见 `evals/README.md`。
+[`evals/trigger-queries.json`](evals/trigger-queries.json) 是 description 的回归评测集（12 条正例 + 9 条负例）。修改 description 前请先跑评测并记录通过率；方法论（含训练/验证集划分、防过拟合）见 [`evals/README.md`](evals/README.md)。
 
 ## 示例
 
@@ -75,7 +75,7 @@ git clone https://github.com/zimodzh/dsh-plugin-dev-skills.git ~/.claude/skills/
 
 ## 维护与贡献
 
-- 更新任何 references 前，先核对官方文档对应页面（文档站或源码生成区块），并在 PR 中注明来源。
+- 更新任何 references 前，先核对[官方文档对应页面](https://deepseek-harness.github.io/deepseek-harness/guide/quickstart)（文档站或源码生成区块），并在 PR 中注明来源。
 - 遵守 Agent Skills 约束：name 为 kebab-case 且与目录一致；description ≤ 1024 字符（DSH 目录注入提醒默认 500）；正文渐进式披露。
 - 欢迎 PR：修正、更多示例、扩充评测集、其它语言版本。
 
