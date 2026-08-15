@@ -1,6 +1,13 @@
 # dsh-plugin-dev
 
-An [Agent Skills](https://agentskills.io)–compliant skill that teaches agents how to develop plugins for **DeepSeek Harness (DSH)**. 中文说明见 [README.zh.md](README.zh.md)。
+<p align="center">
+  <samp>
+    <strong>English</strong> ·
+    <a href="./README.zh.md">中文</a>
+  </samp>
+</p>
+
+An [Agent Skills](https://agentskills.io)–compliant skill that teaches agents how to develop plugins for **DeepSeek Harness (DSH)**.
 
 DeepSeek Harness is a plugin-based SDK for building agent harnesses: model adapters, the tool registry, the session log, even the agent loop itself — everything is a Cordis plugin that can be swapped from configuration. This skill distills the official DSH documentation into one executable standard for writing those plugins, so any agent that loads it develops DSH plugins the same way every time.
 

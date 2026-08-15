@@ -1,6 +1,13 @@
-# dsh-plugin-dev（中文说明）
+# dsh-plugin-dev
 
-一套遵循 [Agent Skills 规范](https://agentskills.io) 的技能，用于开发 **DeepSeek Harness（DSH）** 插件。英文主说明见 [README.md](README.md)。
+<p align="center">
+  <samp>
+    <strong>中文</strong> ·
+    <a href="./README.md">English</a>
+  </samp>
+</p>
+
+一套遵循 [Agent Skills 规范](https://agentskills.io) 的技能，用于开发 **DeepSeek Harness（DSH）** 插件。
 
 DSH 是一个插件化的 Agent Harness SDK：模型适配器、工具注册表、会话日志、甚至 agent loop 本身，全都是可以从配置里替换的 Cordis 插件。本技能把官方文档里散落在教程、参考手册与生成目录中的约定，收敛成一套可执行的标准——任何加载了它的 agent，都能用同一种方式开发 DSH 插件。
 
