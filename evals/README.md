@@ -1,5 +1,12 @@
 # Trigger evals
 
+<p align="center">
+  <samp>
+    <strong>English</strong> ·
+    <a href="./README.zh.md">中文</a>
+  </samp>
+</p>
+
 Regression set for the skill's `description`, following the methodology from the Agent Skills guide "Optimizing skill descriptions".
 
 ## The eval set
