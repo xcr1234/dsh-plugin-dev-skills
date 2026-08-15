@@ -18,6 +18,8 @@
 
 DSH 是一个插件化的 Agent Harness SDK：模型适配器、工具注册表、会话日志、甚至 agent loop 本身，全都是可以从配置里替换的 Cordis 插件。本技能把[官方文档](https://deepseek-harness.github.io/deepseek-harness/guide/quickstart)里散落在教程、参考手册与生成目录中的约定，收敛成一套可执行的标准——任何加载了它的 agent，都能用同一种方式开发 DSH 插件。
 
+> **注意：** 本技能为社区维护项目，与 DeepSeek 官方无隶属关系，亦未获官方背书。
+
 ## 技能里有什么
 
 ```
@@ -42,7 +44,7 @@ git clone https://github.com/zimodzh/dsh-plugin-dev-skills.git ~/.claude/skills/
 
 把目标目录换成你所用 agent 的对应路径（见下表）；也可以下载 release 压缩包，解压后把文件夹改名为 `dsh-plugin-dev`。
 
-无需构建、无需脚本依赖、无需任何配置。
+无需构建、无需脚本依赖、无需任何配置——以上说的是技能本身。实际开发 DSH 插件则需要一个可用的 DSH 环境：Node.js、pnpm，以及示例中用到的 `dsh`。
 
 | Agent | 项目级 | 用户级 |
 | --- | --- | --- |
