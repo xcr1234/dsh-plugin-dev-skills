@@ -14,7 +14,7 @@
   <img src="https://img.shields.io/badge/Agent_Skills-compliant-4D6BFE?style=flat-square" alt="Agent Skills compliant" />
 </p>
 
-An [Agent Skills](https://agentskills.io)–compliant skill that teaches agents how to develop plugins for [**DeepSeek Harness (DSH)**](https://deepseek-harness.github.io/deepseek-harness/guide/quickstart).
+An [Agent Skills](https://agentskills.io)–compliant skill that teaches agents how to develop plugins for [**DeepSeek Harness (DSH)**](https://github.com/deepseek-ai/deepseek-harness).
 
 DeepSeek Harness is a plugin-based SDK for building agent harnesses: model adapters, the tool registry, the session log, even the agent loop itself — everything is a Cordis plugin that can be swapped from configuration. This skill distills the [official DSH documentation](https://deepseek-harness.github.io/deepseek-harness/guide/quickstart) into one executable standard for writing those plugins, so any agent that loads it develops DSH plugins the same way every time.
 
@@ -76,7 +76,7 @@ This skill covers **file-based** DSH plugin development: plugin packages, cordis
 
 ## Contributing
 
-- Before updating any reference, check the corresponding [official docs page](https://deepseek-harness.github.io/deepseek-harness/guide/quickstart) (site or generated source blocks) and cite it in your PR.
+- Before updating any reference, check the corresponding [official documentation](https://deepseek-harness.github.io/deepseek-harness/guide/quickstart) page (site or generated source blocks) and cite it in your PR.
 - Respect the Agent Skills constraints: kebab-case `name` matching the folder; `description` ≤ 1024 chars (DSH's catalog reminder caps at 500); progressive disclosure in the body.
 - PRs are welcome: fixes, more examples, a larger eval set, and translations.
 

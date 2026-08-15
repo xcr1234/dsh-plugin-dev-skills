@@ -7,7 +7,7 @@
   </samp>
 </p>
 
-Two minimal, copy-and-run examples of DSH plugins in bundle format (plain JavaScript, no build step). Both assume the `dsh` CLI is installed.
+Two minimal, copy-and-run examples of DSH plugins in bundle format (plain JavaScript, no build step). Both assume `dsh` is installed.
 
 | Example | What it demonstrates | Try it |
 | --- | --- | --- |

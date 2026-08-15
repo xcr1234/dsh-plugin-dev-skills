@@ -7,7 +7,7 @@
   </samp>
 </p>
 
-Regression set for the skill's `description`, following the methodology from the Agent Skills guide "Optimizing skill descriptions".
+Regression set for the skill's `description`, following the methodology from the Agent Skills guide ["Optimizing skill descriptions"](https://agentskills.io/skill-creation/optimizing-descriptions).
 
 ## The eval set
 
