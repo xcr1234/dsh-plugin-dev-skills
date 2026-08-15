@@ -1,19 +1,20 @@
 # hello-plugin
 
-最小 DSH 插件示例（组合包/bundle 格式，纯 JS、无构建步骤）。加载后打印加载日志，并用 ctx.effect 演示"注册即副作用、卸载自动清理"（每 5 秒心跳，停用时自动清除定时器）。
+A minimal DSH plugin in bundle format (plain JavaScript, no build step). It logs on load and demonstrates that every registration is a disposable side effect: a heartbeat interval registered with `ctx.effect` is cleared automatically when the plugin unloads.
 
-## 安装
+## Install
 
 ```bash
 dsh plugin --profile demo add ./examples/hello-plugin
-dsh --profile demo --dump-config    # 应看到 "# == dsh-hello-plugin" 层
-dsh --profile demo                  # 启动后日志出现 [hello-plugin] plugin loaded!
+dsh --profile demo --dump-config    # expect a "# == dsh-hello-plugin" layer
+dsh --profile demo                  # logs: [hello-plugin] plugin loaded! (plus a heartbeat every 5s)
 ```
 
-首次使用会初始化 profile（@deepseek-ai/dsh-base 作为第一个组合包）。若跳过 dump-config 直接启动即可看到心跳日志。
+The first `add` initializes the profile (`@deepseek-ai/dsh-base` is added as its first bundle).
 
-## 说明
+## How it maps to the standard
 
-- package.json 的 dsh.bundle 声明指向 cordis.patch.yml；patch 行按包名引用插件（Node 模块解析才能找到已安装代码）。
-- 换成你自己的插件：复制本目录，改包名、index.js 导出与 patch 中的 id/name。
-- 相关标准：dsh-plugin-dev 技能的 references/plugin-anatomy.md（生命周期）与 references/packaging.md（打包与层序）。
+- `package.json` declares `dsh.bundle`, pointing at `cordis.patch.yml`; the patch row references the plugin by package name so Node module resolution finds the installed code.
+- `index.js` exports `name` and `apply(ctx)`; everything registered through `ctx` is cleaned up automatically on unload.
+- To turn this into your own plugin: copy the folder, change the package name, the exports in `index.js`, and the `id`/`name` in the patch file.
+- Related standards: `references/plugin-anatomy.md` (lifecycle) and `references/packaging.md` (bundles & layer order).

@@ -61,6 +61,8 @@ The content was distilled from the official DeepSeek Harness documentation site 
 - `examples/hello-plugin` — a minimal plugin in bundle format. Run `dsh plugin --profile demo add ./examples/hello-plugin`, then `dsh --profile demo`: you should see `[hello-plugin] plugin loaded!` and a heartbeat every 5 seconds, cleaned up automatically on unload.
 - `examples/greet-tool` — a minimal model-facing tool. After installing it, ask the agent: "Use the greet tool to greet Ada." It should reply "Hello, Ada!".
 
+See [examples/README.md](examples/README.md) for the full walkthroughs.
+
 ## Scope
 
 This skill covers **file-based** DSH plugin development: plugin packages, cordis.yml rows, patch overlays, tools, adapters, bundles, profiles, and in-repo workspace packages. Out of scope: in-session dynamic plugins (the `cordis_define`/`cordis_run` flow) and agent-preset composition editing — those are handled by each deployment's own dedicated skills and tools.

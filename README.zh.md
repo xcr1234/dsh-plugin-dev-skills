@@ -60,6 +60,8 @@ git clone https://github.com/zimodzh/dsh-plugin-dev-skills.git ~/.claude/skills/
 - `examples/hello-plugin` —— 最小插件（bundle 格式）：`dsh plugin --profile demo add ./examples/hello-plugin` 后 `dsh --profile demo` 启动，应看到加载日志和每 5 秒一次的心跳，卸载时自动清理。
 - `examples/greet-tool` —— 最小模型工具：安装后对 agent 说 "Use the greet tool to greet Ada."，应收到 "Hello, Ada!"。
 
+完整步骤见 [examples/README.md](examples/README.md)。
+
 ## 范围边界
 
 覆盖**仓库内、文件式**的 DSH 插件开发：插件包、cordis.yml 行、patch overlay、工具、适配器、组合包、profile、仓库内 workspace 包。不覆盖会话内动态插件（`cordis_define`/`cordis_run` 流）与 agent preset 组合编辑——这两类由各部署的专项技能或官方工具负责。
