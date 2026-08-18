@@ -35,7 +35,7 @@ export function apply(ctx: Context) {
 }
 ```
 
-不要用 inject 规避 undefined 检查；也不要访问未声明注入的 ctx.xxx（Guard 会拒绝未声明的依赖）。
+不要用 inject 规避 undefined 检查；也不要直接访问未声明注入的 ctx.xxx——ctx 是服务解析器代理，未声明的服务求值可能得到 undefined，且其消失时插件不会被通知重载。
 
 ## 提供服务（Service 基类）
 
@@ -98,7 +98,7 @@ cordis.yml 支持服务隔离——同一个服务可以有多个实例，不同
     - name: './src/plugin-b.ts'
 ```
 
-plugin-a 与 plugin-b 各自看到组内 Bash 实例，互不影响。preset 自有服务必须放在 isolate realm 之后，否则会发布到进程全局层、被挂载审计拒绝。
+plugin-a 与 plugin-b 各自看到组内 Bash 实例，互不影响。preset 自有服务必须放在 isolate realm 之后，否则会发布到进程全局层（agentPresets 在创建期会拒绝此类向根服务 realm 发布服务的行，见「能力 Seams 与核心服务」页）。
 
 ## Harness 内置服务
 

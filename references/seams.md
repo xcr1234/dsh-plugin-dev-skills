@@ -125,7 +125,7 @@ turn/end
 ```
 
 - turn/*、step/*、user/message、assistant/*、tool/* 是**持久会话事件**；其余分属三个事件域（会话、agent、能力）的实时扩展点。
-- agent/pre-step、agent/request、llm/stream 与三个 tools/* 事件是 waterfall（监听器必须调用 next()）；agent/turn-stopping 是 serial（无 next()）。
+- agent/pre-step、agent/request、llm/stream 与三个 tools/* 事件是 waterfall（监听器必须调用 next()）；agent/turn-stopping 是 serial（无 next()）。以上具体分发模式以生成目录为准。
 - **模型可见即已记录**：抵达模型请求的一切必须能从日志重建，由运行时不变式断言。新增模型可见输入 = 新增会话事件（扩展 SessionEventMap 并从日志渲染）。
 
 ## 会话事件（12 种变体）

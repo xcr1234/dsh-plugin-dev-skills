@@ -4,7 +4,7 @@ description: 开发 DeepSeek Harness (DSH) 插件的标准与权威参考：编�
 license: MIT
 compatibility: 适用于任何支持 Agent Skills 的 agent。内容面向 DeepSeek Harness 的 Cordis 插件生态（@deepseek-ai/* 包）。
 metadata:
-  author: zimo
+  author: Stardust
   version: "1.2.0"
 ---
 
@@ -24,7 +24,7 @@ metadata:
 2. **所有贡献都是副作用。** 通过 ctx 做的一切注册（事件监听、工具、适配器、ctx.effect）在插件卸载时自动撤销；不要在模块作用域创建进程级/页面级副作用；不返回 disposer 的第三方订阅要主动查清清理机制。
 3. **waterfall 监听器必须调用 next()。** 不调用 next() 即有意短路下游（用于拦截/网关），不是可选项。
 4. **失败要响亮。** apply 抛异常则进程终止；配置校验失败则明确报错；schema 应表达自身完备的约束，不要在运行时悄悄吞掉错误。
-5. **必需依赖用 inject 声明，可选依赖用 ctx.get() 判空。** 不要用 inject 规避 undefined 检查；不要访问未声明注入的 ctx.xxx（Guard 会拒绝）。
+5. **必需依赖用 inject 声明，可选依赖用 ctx.get() 判空。** 不要用 inject 规避 undefined 检查；也不要直接访问未声明注入的 ctx.xxx——未声明的服务经服务解析器求值可能得到 undefined。
 6. **配置一律 Schemastery。** 导出 interface Config 与同名 Schema，默认值写在 schema 里；不导出普通对象充当 Config；凡不同部署可能改值的参数都必须进配置。
 7. **工具 execute 返回规范 JSON 值，不返回内容块。** 面向人类的文本放 output.render；部署策略/钩子不要内建进工具体。
 8. **模型可见即已记录。** 新增任何模型可见输入，都要落在会话日志可重建的机制里（新增持久事件或经 agent.inject()），并有运行时不变式断言。
@@ -115,22 +115,23 @@ pnpm dsh web --patch ./scratch-plugin/cordis.yml   # 打开 http://127.0.0.1:308
 
 ## 参考文件（按需加载，不要一次全读）
 
-- references/plugin-anatomy.md —— 插件形态、生命周期、Fiber 状态机、自动清理、HMR
-- references/services.md —— 服务定义/提供/消费、inject、隔离
-- references/events.md —— 五种事件分发模式、命名、持久会话事件区分
-- references/config.md —— 插件配置与 cordis.yml 行
-- references/context-api.md —— 上下文 API（服务存储/作用域/静态成员）、Fiber 类、注册表、继承的框架 API
-- references/three-roles.md —— 能力三种角色（seam）设计
-- references/tools.md —— 工具开发完整约定（两种注册、execute 规则、schema DSL、流水线、UI 卡片）
-- references/llm-adapter.md —— LLM 适配器协议（StreamChunk、7 条协议义务、注册语义）
-- references/plugin-forms.md —— 四种扩展形态（工具/钩子/UI/协议桥）与功能→机制映射
-- references/packaging.md —— 打包、安装与层序
-- references/workspace-package.md —— 在 DSH monorepo 内新建包的逐文件清单与命名规范
-- references/seams.md —— 核心 seam 与能力服务全表、新行为归属、轮次流程
+- references/plugin-anatomy.md —— 写/改插件、处理生命周期或 HMR 时读
+- references/services.md —— 定义或消费服务、注入依赖时读
+- references/events.md —— 用事件通信、监听扩展点时读
+- references/config.md —— 让插件可配置时读
+- references/context-api.md —— 用作用域、服务存储或 Fiber API 时读
+- references/three-roles.md —— 拆分可替换能力时读
+- references/tools.md —— 开发模型工具时读
+- references/llm-adapter.md —— 接入新模型提供方时读
+- references/plugin-forms.md —— 写钩子/UI/协议桥插件时读
+- references/packaging.md —— 打包安装、交付 plugin 时读
+- references/workspace-package.md —— 在 monorepo 内新建包时读
+- references/seams.md —— 查内置服务、归属位置或架构映射时读
 
 ## 验证
 
 - 格式自检：name 为 kebab-case 且与目录名一致；description 非空且简洁（本技能控制在 500 字符内）；正文用标准 Markdown；所有引用的 references 文件真实存在。
+- 目录命名：本技能名（name）为 dsh-plugin-dev，与托管仓库名 dsh-plugin-dev-skills 不同——克隆/解压后必须把文件夹命名为 dsh-plugin-dev（与 name 一致），否则按目录名寻址的加载器可能发现不了本技能。
 - 有 skills-ref CLI 的环境可执行：skills-ref validate ./dsh-plugin-dev
 - 触发回归：修改 description 后运行 evals/trigger-queries.json 评测集（方法见仓库 evals/README.md）。
 - 行为验证：按场景 A 走通一个最小插件（加载日志 + 卸载清理），再按场景 B 走通一个 greet 工具。
