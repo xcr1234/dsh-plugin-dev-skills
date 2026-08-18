@@ -35,6 +35,44 @@ dsh-plugin-dev/
 
 The reference library covers: plugin anatomy & lifecycle · services & dependency injection · all five event dispatch modes · plugin configuration · Context/Fiber/registry APIs · three-role capability design (Definition/Provider/Consumer) · tool development · the LLM adapter protocol · plugin form extensions (tool/hook/UI/protocol bridge) · packaging & installation · in-repo workspace packages · the complete capability-seam catalog.
 
+## Directory structure
+
+```
+dsh-plugin-dev/
+├── SKILL.md                        # skill entry: frontmatter, 8 hard rules, 6 scenario workflows, checklists
+├── LICENSE                         # MIT license
+├── README.md / README.en.md        # this doc (Chinese primary / English secondary)
+├── references/                     # 12 detailed standards (progressive disclosure, on-demand)
+│   ├── README.md / README.en.md    #   index: file | covers | when to read
+│   ├── plugin-anatomy.md           #   plugin shapes, lifecycle, Fiber, auto-cleanup, HMR
+│   ├── services.md                 #   defining/consuming services, inject, isolation
+│   ├── events.md                   #   five dispatch modes, naming
+│   ├── config.md                   #   plugin config and cordis.yml rows
+│   ├── context-api.md              #   Context API, Fiber class, registry, inherited framework API
+│   ├── three-roles.md              #   three-role capability design
+│   ├── tools.md                    #   complete tool-development contract
+│   ├── llm-adapter.md              #   LLM adapter protocol
+│   ├── plugin-forms.md             #   four extension forms + feature→mechanism map
+│   ├── packaging.md                #   packaging, install, layer order
+│   ├── workspace-package.md        #   in-monorepo package checklist & naming
+│   └── seams.md                    #   capability-seam catalog, architecture map
+├── examples/                       # minimal, copy-and-run examples
+│   ├── README.md / README.en.md    #   example index
+│   ├── hello-plugin/               #   minimal plugin (lifecycle / auto-cleanup)
+│   │   ├── README.md / README.en.md
+│   │   ├── index.js
+│   │   ├── package.json
+│   │   └── cordis.patch.yml
+│   └── greet-tool/                 #   minimal model-facing tool (defineTool)
+│       ├── README.md / README.en.md
+│       ├── index.js
+│       ├── package.json
+│       └── cordis.patch.yml
+└── evals/                          # trigger-evaluation set for the description
+    ├── README.md / README.en.md    #   methodology (train/validation split)
+    └── trigger-queries.json        #   12 should-trigger + 9 should-not-trigger
+```
+
 ## Installation
 
 The skill name is `dsh-plugin-dev`, and Agent Skills requires the containing folder to be named the same. This repository is called `dsh-plugin-dev-skills` — clone it directly into a folder named `dsh-plugin-dev`:

@@ -34,6 +34,44 @@ dsh-plugin-dev/
 
 references 覆盖：插件形态与生命周期 · 服务与依赖注入 · 五种事件分发模式 · 插件配置 · 上下文/Fiber/注册表 API · 三种角色能力设计（Definition/Provider/Consumer）· 工具开发 · LLM 适配器协议 · 插件形态扩展（工具/钩子/UI/协议桥）· 打包与安装 · 仓库内 workspace 包 · 完整能力 seam 目录。
 
+## 目录结构
+
+```
+dsh-plugin-dev/
+├── SKILL.md                        # 技能入口：frontmatter、8 条硬规则、6 个场景工作流、检查清单
+├── LICENSE                         # MIT 许可证
+├── README.md / README.en.md        # 本说明（中文主 / 英文附）
+├── references/                     # 12 份详细标准（渐进式披露，按需加载）
+│   ├── README.md / README.en.md    #   目录索引：文件｜内容｜何时读
+│   ├── plugin-anatomy.md           #   插件形态、生命周期、Fiber、自动清理、HMR
+│   ├── services.md                 #   服务定义/提供/消费、inject、隔离
+│   ├── events.md                   #   五种事件分发模式、命名
+│   ├── config.md                   #   插件配置与 cordis.yml 行
+│   ├── context-api.md              #   上下文 API、Fiber 类、注册表、继承的框架 API
+│   ├── three-roles.md              #   能力三种角色（seam）设计
+│   ├── tools.md                    #   工具开发完整约定
+│   ├── llm-adapter.md              #   LLM 适配器协议
+│   ├── plugin-forms.md             #   四种扩展形态 + 功能→机制映射
+│   ├── packaging.md                #   打包、安装与层序
+│   ├── workspace-package.md        #   monorepo 内新建包的清单与命名
+│   └── seams.md                    #   核心 seam 与能力服务全表、架构映射
+├── examples/                       # 可复制、可运行的最小示例
+│   ├── README.md / README.en.md    #   示例索引
+│   ├── hello-plugin/               #   最小插件（生命周期 / 自动清理）
+│   │   ├── README.md / README.en.md
+│   │   ├── index.js
+│   │   ├── package.json
+│   │   └── cordis.patch.yml
+│   └── greet-tool/                 #   最小模型工具（defineTool）
+│       ├── README.md / README.en.md
+│       ├── index.js
+│       ├── package.json
+│       └── cordis.patch.yml
+└── evals/                          # description 触发评测集
+    ├── README.md / README.en.md    #   评测方法（训练/验证集划分）
+    └── trigger-queries.json        #   12 正例 + 9 负例
+```
+
 ## 安装
 
 技能名为 `dsh-plugin-dev`，Agent Skills 规范要求所在文件夹同名；本仓库名为 `dsh-plugin-dev-skills`。克隆时直接指定目标文件夹名即可一步到位：
