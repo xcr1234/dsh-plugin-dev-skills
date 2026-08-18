@@ -25,7 +25,7 @@ DSH 是一个插件化的 Agent Harness SDK：模型适配器、工具注册表�
 ```
 dsh-plugin-dev/
 ├── SKILL.md      # 入口：frontmatter、8 条硬规则、6 个场景工作流、决策速查表、完成前检查清单
-├── references/   # 12 份详细标准，按需加载（渐进式披露）
+├── references/   # 12 份详细标准，按需加载；索引见 references/README.md
 ├── examples/     # 两个可复制、可运行的最小示例
 │   ├── hello-plugin/
 │   └── greet-tool/

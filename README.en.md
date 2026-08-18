@@ -26,7 +26,7 @@ DeepSeek Harness is a plugin-based SDK for building agent harnesses: model adapt
 dsh-plugin-dev/
 ├── SKILL.md      # entry point: frontmatter, 8 hard rules, 6 scenario workflows,
 │                 # decision tables, and a pre-completion checklist
-├── references/   # 12 detailed standards, loaded on demand (progressive disclosure)
+├── references/   # 12 detailed standards, loaded on demand (index: references/README.md)
 ├── examples/     # two minimal, copy-and-run example plugins
 │   ├── hello-plugin/
 │   └── greet-tool/

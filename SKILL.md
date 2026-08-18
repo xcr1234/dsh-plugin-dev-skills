@@ -115,6 +115,8 @@ pnpm dsh web --patch ./scratch-plugin/cordis.yml   # 打开 http://127.0.0.1:308
 
 ## 参考文件（按需加载，不要一次全读）
 
+> 完整索引与「何时读」对照表见 references/README.md。
+
 - references/plugin-anatomy.md —— 写/改插件、处理生命周期或 HMR 时读
 - references/services.md —— 定义或消费服务、注入依赖时读
 - references/events.md —— 用事件通信、监听扩展点时读
